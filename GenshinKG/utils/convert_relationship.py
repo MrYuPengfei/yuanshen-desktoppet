@@ -4,13 +4,13 @@ import re
 import pandas as pd
 
 def country2rel():
-    df = pd.read_csv('../kg_data/mhy-id/area-id.csv')
+    df = pd.read_csv('../../rec_intention/kg_data/mhy-id/area-id.csv')
     df.columns=['mhy_id','area','place','country']
     df.drop(['mhy_id'],inplace=True,axis=1)
     df.to_csv('../kg_data/done/rel-area-place.csv',index=False,encoding='utf-8')
 
 def char2rel():
-    df = pd.read_csv('../kg_data/done/label-character.csv')
+    df = pd.read_csv('../../rec_intention/kg_data/done/label-character.csv')
     df = df[~df['name'].isin(['旅行者（荧）','旅行者（空）'])]
     df = df[['name','element','country','break_material','instance_material','weapon_choice']]
 
@@ -49,7 +49,7 @@ def char2rel():
 
 
 def char2food():
-    df = pd.read_csv('../kg_data/label-food.csv')
+    df = pd.read_csv('../../rec_intention/kg_data/label-food.csv')
     df = df[['name','description']]
     data = []
     for _,row in df.iterrows():
@@ -62,7 +62,7 @@ def char2food():
     df_cp.to_csv('../kg_data/done/rel-character-food.csv',index=False,encoding='utf-8')
 
 def food2material():
-    df = pd.read_csv('../kg_data/label-food.csv')
+    df = pd.read_csv('../../rec_intention/kg_data/label-food.csv')
     df = df[['name', 'ingredient']]
     data = []
     for _,row in df.iterrows():
@@ -76,7 +76,7 @@ def food2material():
 
 
 def master2material():
-    df = pd.read_csv('../kg_data/done/label-master.csv')
+    df = pd.read_csv('../../rec_intention/kg_data/done/label-master.csv')
     df = df[['name','dropping']]
     data=[]
     for _,row in df.iterrows():
@@ -88,7 +88,7 @@ def master2material():
 
 
 def weapon2material():
-    df = pd.read_csv('../kg_data/done/label-weapon.csv')
+    df = pd.read_csv('../../rec_intention/kg_data/done/label-weapon.csv')
     df = df[['name','material']]
     data = []
     for _,row in df.iterrows():
@@ -101,9 +101,9 @@ def weapon2material():
 
 
 def look4material():
-    df = pd.read_csv('../kg_data/done/label-character.csv')
-    df1 = pd.read_csv('../kg_data/label-food.csv')
-    df2 = pd.read_csv('../kg_data/done/label-material.csv')
+    df = pd.read_csv('../../rec_intention/kg_data/done/label-character.csv')
+    df1 = pd.read_csv('../../rec_intention/kg_data/label-food.csv')
+    df2 = pd.read_csv('../../rec_intention/kg_data/done/label-material.csv')
     material = []
     for _,row in df.iterrows():
         m1 = [re.sub('\*[\d]+','',i) for i in eval(row['break_material'])]
@@ -116,8 +116,8 @@ def look4material():
 
     mat = [i.replace('「','').replace('」','') for i in list(df2['name'])]
     add_material = list(set(material)-set(mat))
-    df3 = pd.read_csv('../kg_data/master2.csv')
-    df5 = pd.read_csv('../kg_data/materials.csv')
+    df3 = pd.read_csv('../../rec_intention/kg_data/master2.csv')
+    df5 = pd.read_csv('../../rec_intention/kg_data/materials.csv')
     data = []
     for _,row in df3.iterrows():
         id = row['id']
@@ -137,7 +137,7 @@ def look4material():
     df4.to_csv('../kg_data/add_material.csv', index=False, encoding='utf-8')
 
 def instance2material():
-    df = pd.read_csv('../kg_data/done/label-instance.csv')
+    df = pd.read_csv('../../rec_intention/kg_data/done/label-instance.csv')
     data = []
     for _,row in df.iterrows():
         if row['sec_instance']!='暂无':
@@ -147,7 +147,7 @@ def instance2material():
     df1.to_csv('../kg_data/done/rel-instance-material.csv', index=False, encoding='utf-8')
 
 def character2artifacts():
-    df= pd.read_csv('../kg_data/done/label-artifacts.csv')
+    df= pd.read_csv('../../rec_intention/kg_data/done/label-artifacts.csv')
     data = []
     for idx,row in df.iterrows():
         relic = row['name']
@@ -159,7 +159,7 @@ def character2artifacts():
     df1.to_csv('../kg_data/done/rel-character-artifacts.csv', index=False, encoding='utf-8')
 
 def artifacts2instance():
-    df = pd.read_csv('../kg_data/done/label-artifacts.csv')
+    df = pd.read_csv('../../rec_intention/kg_data/done/label-artifacts.csv')
     data = []
     for idx, row in df.iterrows():
         relic = row['name']

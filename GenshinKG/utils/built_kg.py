@@ -4,7 +4,7 @@
 # summary: 生成原神知识图谱 需要连接neo4j数据库
 import pandas
 import pandas as pd
-from connNeo4j import Neo4j
+from connDB.neo4j import Neo4j
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
@@ -12,7 +12,12 @@ neo4j_config = {
     'api': 'http://127.0.0.1:7474/',
     'auth': ("neo4j", "slash123456")
 }
-neo4j = Neo4j(config=neo4j_config)
+neo4j_config2 = {
+    'api': 'http://47.97.6.229/:7474/',
+    'auth': ("neo4j", "slash123456")
+}
+
+neo4j = Neo4j(config=neo4j_config2)
 
 
 class YuanShen():
@@ -20,40 +25,40 @@ class YuanShen():
         """
         读取文件 删除一些无需导入的属性
         """
-        self.character = pd.read_csv('../kg_data/done/label-character.csv')
+        self.character = pd.read_csv('../data/label-character.csv')
         self.character.drop(
             ['element', 'country', 'break_material', 'skill_material', 'weapon_choice', 'constellation'], axis=1,
             inplace=True)
 
-        self.material = pd.read_csv('../kg_data/done/label-material.csv')
+        self.material = pd.read_csv('../data/label-material.csv')
         self.material.drop(['getting', 'using'], axis=1, inplace=True)
 
-        self.area = pd.read_csv('../kg_data/done/label-area.csv')
+        self.area = pd.read_csv('../data/label-area.csv')
         self.area.drop(
             ['common_master', 'elite_master', 'boss_master', 'dropping_material', 'ingredient', 'picking_material',
              'specialty'], axis=1, inplace=True)
 
-        self.element = pd.read_csv('../kg_data/done/label-element.csv')
+        self.element = pd.read_csv('../data/label-element.csv')
 
-        self.weapon = pd.read_csv('../kg_data/done/label-weapon.csv')
+        self.weapon = pd.read_csv('../data/label-weapon.csv')
         self.weapon.drop(['material'], axis=1, inplace=True)
 
-        self.master = pd.read_csv('../kg_data/done/label-master.csv')
+        self.master = pd.read_csv('../data/label-master.csv')
         self.master.drop(['dropping'], axis=1, inplace=True)
 
         self.food = pd.read_csv('../kg_data/label-food.csv')
         self.food.drop(['ingredient', 'getting'], axis=1, inplace=True)
 
-        self.npc = pd.read_csv('../kg_data/done/label-npc.csv')
+        self.npc = pd.read_csv('../data/label-npc.csv')
 
-        self.country = pd.read_csv('../kg_data/done/label-country.csv')
+        self.country = pd.read_csv('../data/label-country.csv')
 
-        self.place = pd.read_csv('../kg_data/done/label-place.csv')
+        self.place = pd.read_csv('../data/label-place.csv')
 
-        self.instance = pd.read_csv('../kg_data/done/label-instance.csv')
+        self.instance = pd.read_csv('../data/label-instance.csv')
         self.instance.drop(['prob_product','fix_product','master'],axis=1,inplace=True)
 
-        self.artifacts = pd.read_csv('../kg_data/done/label-artifacts.csv')
+        self.artifacts = pd.read_csv('../data/label-artifacts.csv')
 
         self.artifacts.drop(['getting','role'],axis=1,inplace=True)
 
@@ -100,8 +105,8 @@ class YuanShen():
             country-area
             area-place
             """
-            country_area = pd.read_csv('../kg_data/done/rel-country-area.csv')
-            area_place = pd.read_csv('../kg_data/done/rel-area-place.csv')
+            country_area = pd.read_csv('../data/rel-country-area.csv')
+            area_place = pd.read_csv('../data/rel-area-place.csv')
             self.create_relationship(rel_df=country_area, node1=area, node2=country,
                                      label1='area', label2='country')
             self.create_relationship(rel_df=area_place, node1=place, node2=area,
@@ -116,13 +121,13 @@ class YuanShen():
             character-instance-material
             character-artifacts
             """
-            char_cultivating_material = pd.read_csv('../kg_data/done/rel-character-cultivating_material.csv')
-            char_country = pd.read_csv('../kg_data/done/rel-character-country.csv')
-            char_element = pd.read_csv('../kg_data/done/rel-character-element.csv')
-            char_weapon = pd.read_csv('../kg_data/done/rel-character-weapon.csv')
-            char_material = pd.read_csv('../kg_data/done/rel-character-break_material.csv')
-            char_food = pd.read_csv('../kg_data/done/rel-character-food.csv')
-            char_artifacts = pd.read_csv('../kg_data/done/rel-character-artifacts.csv')
+            char_cultivating_material = pd.read_csv('../data/rel-character-cultivating_material.csv')
+            char_country = pd.read_csv('../data/rel-character-country.csv')
+            char_element = pd.read_csv('../data/rel-character-element.csv')
+            char_weapon = pd.read_csv('../data/rel-character-weapon.csv')
+            char_material = pd.read_csv('../data/rel-character-break_material.csv')
+            char_food = pd.read_csv('../data/rel-character-food.csv')
+            char_artifacts = pd.read_csv('../data/rel-character-artifacts.csv')
 
             self.create_relationship(rel_df=char_country,node1=character,node2=country,
                                      label1='character',label2='country')
@@ -141,27 +146,27 @@ class YuanShen():
             """
             weapon-material
             """
-            weapon_material = pd.read_csv('../kg_data/done/rel-weapon-material.csv')
+            weapon_material = pd.read_csv('../data/rel-weapon-material.csv')
             self.create_relationship(rel_df=weapon_material, node1=weapon, node2=material,
                                      label1='weapon', label2='material')
             """
             master-material
             """
-            master_material = pd.read_csv('../kg_data/done/rel-master-material.csv')
+            master_material = pd.read_csv('../data/rel-master-material.csv')
             self.create_relationship(rel_df=master_material, node1=master, node2=material,
                                      label1='master', label2='material')
             """
             food-material
             """
-            food_material = pd.read_csv('../kg_data/done/rel-food-material.csv')
+            food_material = pd.read_csv('../data/rel-food-material.csv')
             self.create_relationship(rel_df=food_material, node1=food, node2=material,
                                      label1='food', label2='material')
             """
             instance-material
             instance-artifacts
             """
-            instance_material = pd.read_csv('../kg_data/done/rel-instance-material.csv')
-            instance_artifacts = pd.read_csv('../kg_data/done/rel-instance-artifacts.csv')
+            instance_material = pd.read_csv('../data/rel-instance-material.csv')
+            instance_artifacts = pd.read_csv('../data/rel-instance-artifacts.csv')
             self.create_relationship(rel_df=instance_material, node1=material, node2=instance,
                                      label1='material', label2='instance')
             self.create_relationship(rel_df=instance_artifacts, node1=artifacts, node2=instance,
