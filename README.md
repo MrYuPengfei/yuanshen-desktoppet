@@ -5,9 +5,8 @@
 
 打造一个桌面端派蒙小助手，通过大规模的文本数据训练原神领域的文本预训练模型， 利用收集到的三元组数据搭建原神知识图谱，通过预训练模型进行语音识别和智能问答，通过语音合成技术来帮助回答用户问题。<br>
 
-附上自己转换的链接：<br>
-图片链接: https://pan.baidu.com/s/1AuUjMnYgNScTla7yQA19Og 提取码: yxm5<br>
-语音链接: https://pan.baidu.com/s/1RtTM0iJ_3kRf95jArDA8wA 提取码: p5bp<br>
+附上自己转换的链接（2023/08/28）：<br>
+链接: https://pan.baidu.com/s/18pG17Tybh--8o2Q9u9BUuw 提取码: mkp2
 *****如有侵权请告知，请勿涉及商业用途，否则后果自负！！！<br>*****
 *****注：绿幕素材来源于B站UP:皮皮虾米锅巴 感谢大佬！！！<br>*****
 
@@ -21,8 +20,9 @@ A：Terminal/cmd（终端操作）
 1. git clone https://gitee.com/fg_slash/yuanshen-python3-desktoppet.git 克隆项目。
 2. cd yuanshen-python3-desktoppet 进入目录 pip install -r requirements.txt 安装依赖。
 3. 在config.yaml中配置自己对应的路径和设置
-4. python desktoppet.py 运行py文件。或直接在PyCharm等编辑器中直接右键运行。
-
+4. (1)python desktoppet.py 运行py文件<br>
+   (2)或直接在PyCharm等编辑器中直接右键运行。
+   (3)在终端输入 nohup python -u desktoppet.py >pet.log 2>&1 & （直接后台运行程序！这样就不用一直开着编辑器了！）
 
 #### 使用说明
 
@@ -84,10 +84,10 @@ Windows==>缩放人物：Ctrl + Ctrl - 退出 Ctrl Q
 
 
 #### 后期开发（V2.0）
-1. 基于原神信息的知识图谱。(已完成)
-2. 基于Roberta预训练模型对原神数据进行继续预训练。（数据清洗中）
-3. 用户语音输入、语音识别、意图识别。(未开始)
-4. 部分人物的语音合成、自动问答。(未开始)
+1. ✅ 基于原神信息的知识图谱。(参考GenshinKG文件夹)
+2. ✅ 基于Roberta预训练模型对原神数据进行继续预训练。（https://gitee.com/fg_slash/GenshinBert）
+3. ❎ 用户语音输入、语音识别、意图识别。(未开始)
+4. ❎ 部分人物的语音合成、自动问答。(未开始)
 
 
 
