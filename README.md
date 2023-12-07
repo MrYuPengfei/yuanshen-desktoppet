@@ -1,5 +1,9 @@
 # 原神-基于python3的桌面宠物
 
+#### 下载地址
+百度网盘链接: https://pan.baidu.com/s/1ENOj7bi57NYLtYYBgS4dDw 提取码: h75n 
+--来自百度网盘超级会员v3的分享
+
 
 #### 项目介绍
 
