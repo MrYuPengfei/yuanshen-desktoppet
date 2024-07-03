@@ -2,4 +2,4 @@ Pillow
 pygame
 PyQt5
 PyQt5-tools
-python-for-android
+pyinstaller

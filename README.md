@@ -106,3 +106,11 @@ Windows==>缩放人物：Ctrl + Ctrl - 退出 Ctrl Q
 2. 3.4冲鸭！
 3. 草神没有抽到，可恶，哭泣(灬ꈍ ꈍ灬)！
 4. 坐等申鹤姐姐鸭！
+
+# 安卓编译
+```shell
+androiddeployqt --input android.json --output android-build
+```
+```shell
+p4a apk --private . --package desktoppet --name desktoppet --version 1.0 --bootstrap=sdl2 
+```
