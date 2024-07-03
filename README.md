@@ -52,7 +52,9 @@ Windows==>缩放人物：Ctrl + Ctrl - 退出 Ctrl Q
 ![2](src/2.png)
 ![3](src/3.png)
 ![4](src/4.png)
+#### windows任务栏显示菜单
 
+![任务栏显示菜单](src/任务栏显示菜单.png)
 ### 知识图谱设计和展示
 #### 节点设计（12类）<br>
 人物：character<br>
@@ -119,3 +121,4 @@ p4a apk --private . --package desktoppet --name desktoppet --version 1.0 --boots
 # 制作windows应用程序安装包
 查看部署到WindowsNT.md
 ![安装](src/安装.png)
+
