@@ -1,24 +1,27 @@
 [Setup]
 ; 应用程序的名称和版本
 AppName=原神桌面宠物
-AppVersion=1.0
+AppVersion=1.1
 
 ; 安装程序的输出文件名
 OutputDir=./inno_build
-OutputBaseFilename=安装原神桌面宠物
-
+OutputBaseFilename=原神桌面宠物安装向导
+LicenseFile=license
 ; 安装程序的窗口设置
-UninstallDisplayIcon={app}\app_icon.ico
+SetupIconFile=src\icon256.ico
+WizardImageFile=src\icon256.bmp
+WizardSmallImageFile=src\icon256.bmp
+AppPublisher=于鹏飞
+AppPublisherURL=https://gitee.com/yupengfei1074064684/yuanshen-desktoppet/tree/master
 
 ; 其他设置...
-DefaultDirName={pf}\原神桌面宠物
+DefaultDirName={commonpf}\原神桌面宠物
 DisableProgramGroupPage=yes
 Compression=lzma
 SolidCompression=yes
- 
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"
+Name: "zh_CN"; MessagesFile: "ChineseSimplified.isl"
 
 [Files]
 ; 包含 PyInstaller 打包的应用程序目录
@@ -28,6 +31,14 @@ Source: "dist\原神桌面宠物\_internal\*"; DestDir: "{app}\_internal"; Flags
 [Icons]
 ; 创建开始菜单的快捷方式;设置快捷方式的图标
 Name: "{group}\原神桌面宠物"; Filename: "{app}\原神桌面宠物.exe";IconFilename: "{app}\icon256.ico"
+
+
+[Code]
+procedure BeforInstall;
+begin
+  MsgBox('感谢您安装原神桌面宠物。\n如需支持，请联系作者:于鹏飞，\nEmail:mr_yupengfei@foxmail.com', mbInformation, MB_OK);
+end;
+
 [Run]
 ; 安装后运行应用程序
 Filename: "{app}\原神桌面宠物.exe"; Description: "{cm:LaunchProgram,原神桌面宠物}"; Flags: nowait postinstall
