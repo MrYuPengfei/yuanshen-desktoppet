@@ -48,37 +48,7 @@ pyinstaller  desktoppet.py  --name='原神桌面宠物' --onedir --noconsole --i
 ### 步骤 3: 准备 Inno Setup 脚本
 
 1. 创建一个新的文本文件，并将扩展名改为 `.iss`（例如 `setup.iss`）。
-2. 编辑 `.iss` 文件，写入以下基本的 Inno Setup 脚本内容：
-
-```iss
-[Setup]
-; 应用程序信息
-AppName=MyApplication
-AppVersion=1.0
-DefaultDirName={pf}\MyApplication
-DisableProgramGroupPage=yes
-LicenseFile=LICENSE.txt
-OutputDir=.
-OutputBaseFilename=setup
-Compression=lzma
-SolidCompression=yes
-
-[Files]
-; 包含 PyInstaller 生成的可执行文件
-Source: "dist\your_script.exe"; DestDir: "{app}"
-
-; 包含其他文件（如果有）
-; Source: "path\to\additional\file"; DestDir: "{app}"
-
-[Icons]
-; 创建开始菜单的快捷方式
-Name: "{group}\MyApplication"; Filename: "{app}\your_script.exe}"
-
-[Run]
-; 安装后运行应用程序
-Filename: "{app}\your_script.exe"; Description: "{cm:LaunchProgram,MyApplication}"; Flags: nowait postinstall
-```
-
+2. 编辑 `.iss` 文件。
 3. 根据需要自定义脚本中的字段，例如应用程序名称、版本、安装目录、输出文件名等。
 
 ### 步骤 4: 编译 Inno Setup 脚本
