@@ -32,11 +32,14 @@ Source: "dist\原神桌面宠物\_internal\*"; DestDir: "{app}\_internal"; Flags
 ; 创建开始菜单的快捷方式;设置快捷方式的图标
 Name: "{group}\原神桌面宠物"; Filename: "{app}\原神桌面宠物.exe";IconFilename: "{app}\icon256.ico"
 
-
 [Code]
-procedure BeforInstall;
+procedure CurPageChanged(CurPageID: Integer);
 begin
-  MsgBox('感谢您安装原神桌面宠物。\n如需支持，请联系作者:于鹏飞，\nEmail:mr_yupengfei@foxmail.com', mbInformation, MB_OK);
+  if CurPageID = wpWelcome then
+  begin
+    // 用户处于欢迎页面时显示消息框
+    MsgBox('感谢您安装原神桌面宠物。如需支持，请联系作者:于鹏飞，Email:mr_yupengfei@foxmail.com', mbInformation, MB_OK);
+  end;
 end;
 
 [Run]
