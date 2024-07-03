@@ -108,9 +108,14 @@ Windows==>缩放人物：Ctrl + Ctrl - 退出 Ctrl Q
 4. 坐等申鹤姐姐鸭！
 
 # 安卓编译
+开发中，未完善
 ```shell
 androiddeployqt --input android.json --output android-build
 ```
 ```shell
 p4a apk --private . --package desktoppet --name desktoppet --version 1.0 --bootstrap=sdl2 
 ```
+
+# 制作windows应用程序安装包
+查看部署到WindowsNT.md
+![安装](src/安装.png)

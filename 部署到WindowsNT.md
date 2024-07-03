@@ -20,20 +20,32 @@ pyinstaller --name='原神桌面宠物' --onedir --noconsole --icon=src/logo.ico
 
 
 # Inno Setup
+
 使用 Inno Setup 创建 Python 应用程序的安装包是一个涉及多个步骤的过程。以下是详细的步骤：
 
-步骤 1: 安装 Inno Setup
-访问 Inno Setup 官方网站 并下载安装程序。
-运行下载的安装程序并按照提示完成安装。
-步骤 2: 使用 PyInstaller 打包你的应用程序
-确保你已经安装了 PyInstaller。如果还没有安装，可以通过 pip 安装：
-pip install pyinstaller
-使用 PyInstaller 将你的 Python 脚本打包成可执行文件：
-pyinstaller --onefile your_script.py
-这将在 dist 文件夹中生成一个独立的可执行文件。
-步骤 3: 准备 Inno Setup 脚本
-创建一个新的文本文件，并将扩展名改为 .iss（例如 setup.iss）。
-编辑 .iss 文件，写入以下基本的 Inno Setup 脚本内容：
+### 步骤 1: 安装 Inno Setup
+
+1. 访问 [Inno Setup 官方网站](https://jrsoftware.org/isinfo.php) 并下载安装程序。
+2. 运行下载的安装程序并按照提示完成安装。
+
+### 步骤 2: 使用 PyInstaller 打包你的应用程序
+
+1. 确保你已经安装了 PyInstaller。如果还没有安装，可以通过 pip 安装：
+   ```bash
+   pip install pyinstaller
+   ```
+2. 使用 PyInstaller 将你的 Python 脚本打包成可执行文件：
+   ```bash
+   pyinstaller --onefile your_script.py
+   ```
+   这将在 `dist` 文件夹中生成一个独立的可执行文件。
+
+### 步骤 3: 准备 Inno Setup 脚本
+
+1. 创建一个新的文本文件，并将扩展名改为 `.iss`（例如 `setup.iss`）。
+2. 编辑 `.iss` 文件，写入以下基本的 Inno Setup 脚本内容：
+
+```iss
 [Setup]
 ; 应用程序信息
 AppName=MyApplication
@@ -60,9 +72,28 @@ Name: "{group}\MyApplication"; Filename: "{app}\your_script.exe}"
 [Run]
 ; 安装后运行应用程序
 Filename: "{app}\your_script.exe"; Description: "{cm:LaunchProgram,MyApplication}"; Flags: nowait postinstall
-根据需要自定义脚本中的字段，例如应用程序名称、版本、安装目录、输出文件名等。
-步骤 4: 编译 Inno Setup 脚本
-打开命令提示符或终端。
-使用 Inno Setup 编译器编译 .iss 脚本。假设你的脚本名为 setup.iss，可以使用以下命令：
-"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" setup.iss
-注意：根据你的 Inno Setup 安装路径，可能需要调整上述命令中的路径。
+```
+
+3. 根据需要自定义脚本中的字段，例如应用程序名称、版本、安装目录、输出文件名等。
+
+### 步骤 4: 编译 Inno Setup 脚本
+
+1. 打开命令提示符或终端。
+2. 使用 Inno Setup 编译器编译 `.iss` 脚本。假设你的脚本名为 `setup.iss`，可以使用以下命令：
+   ```bash
+   "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" setup.iss
+   ```
+   注意：根据你的 Inno Setup 安装路径，可能需要调整上述命令中的路径。
+3. 也可以使用inno 6的GUI界面进行编译
+### 步骤 5: 测试安装程序
+
+1. 在编译完成后，检查输出目录（在脚本中定义的 `OutputDir`），你将找到一个名为 `setup.exe`（或你在脚本中定义的其他名称）的安装程序文件。
+2. 在不同的计算机上测试安装程序，确保它正确安装了应用程序及其所有依赖项。
+
+### 注意事项
+
+- 确保所有路径和文件名都是正确的，并且所有必要的文件都被包含在安装包中。
+- Inno Setup 脚本提供了许多高级功能，如条件安装、注册表操作、卸载处理等，你可以根据自己的需求进行配置。
+- 在分发安装程序之前，确保测试安装程序在目标操作系统上能够正常工作。
+
+使用 Inno Setup，你可以创建一个专业的安装过程，提供更好的用户体验，并确保你的应用程序在用户计算机上正确安装。
