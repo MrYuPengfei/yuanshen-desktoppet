@@ -1,4 +1,4 @@
-# 基于pyqt5的原神桌面宠物
+# 基于 PySide6 的原神桌面宠物
 
 #### Description
 {**When you're done, you can delete the content in this README and update the file with details for others getting started with your repository**}
@@ -8,9 +8,9 @@ Software architecture description
 
 #### Installation
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1. Install uv.
+2. Run `uv sync` in the project directory.
+3. Run `uv run python desktoppet.py`.
 
 #### Instructions
 

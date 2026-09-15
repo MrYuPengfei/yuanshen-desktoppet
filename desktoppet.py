@@ -2,21 +2,18 @@ import os
 import random
 import sys
 import pygame.mixer as mixer
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import QTimer, Qt
-from PyQt5.QtGui import QPixmap, QIcon, QImage, QCursor
-from PyQt5.QtWidgets import QSystemTrayIcon, QMenuBar, QAction, QMenu, QApplication, QMainWindow
-import PyQt5.sip
+from PySide6 import QtWidgets
+from PySide6.QtCore import QTimer, Qt
+from PySide6.QtGui import QPixmap, QIcon, QImage, QCursor, QAction
+from PySide6.QtWidgets import QSystemTrayIcon, QMenuBar, QMenu, QApplication, QMainWindow
 import datetime
 import yaml
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(BASE_DIR, 'png'))
 sys.path.append(os.path.join(BASE_DIR, 'music'))
-sys.path.append(os.path.join(BASE_DIR, 'config.yaml'))
 with open(os.path.join(BASE_DIR, 'config.yaml'), 'r', encoding='utf-8') as f:
     config = yaml.safe_load(f)
-mixer.init()
 
 
 def greeting(time):
@@ -33,18 +30,18 @@ def greeting(time):
 class Pet(QMainWindow):
     def __init__(self):
         super(Pet, self).__init__()
+        mixer.init()
         self.audio_player = config['audio']
         self.role_name = config['role']
         self.music_path = config['music_path']
         self.img_path = config['img_path']
         self.bg_music = config['bg_music']
-        desktop = QApplication.desktop()
-        screenRect = desktop.screenGeometry()
+        screenRect = QApplication.primaryScreen().geometry()
         self.screenheight, self.screenwidth = screenRect.height(), screenRect.width()
 
         self.file_path = os.path.join(BASE_DIR, self.img_path, self.role_name)
         self.file_list = sorted(os.listdir(self.file_path))  # 对文件夹里面的所有图片进行排序
-        self.img = QImage().load(os.path.join(BASE_DIR, self.file_path, str(self.file_list[1])))  # 获取第一张图片作为托盘图标
+        self.img = QImage(os.path.join(BASE_DIR, self.file_path, str(self.file_list[1])))  # 获取第一张图片作为托盘图标
         if self.bg_music:
             mixer.music.load(os.path.join(BASE_DIR, self.music_path, self.bg_music, 'background.mp3'))
             mixer.music.play(-1)
@@ -75,7 +72,7 @@ class Pet(QMainWindow):
         else:
             self.index = 1
         self.pic_url = os.path.join(BASE_DIR, self.file_path, str(self.file_list[self.index]))
-        self.pm = QPixmap(self.pic_url, "0", Qt.AvoidDither | Qt.ThresholdDither | Qt.ThresholdAlphaDither).scaled(
+        self.pm = QPixmap(self.pic_url).scaled(
             int(self.scale * self.wt), int(self.scale * self.wt))
         self.resize(self.pm.size())
         self.setMask(self.pm.mask())
@@ -93,7 +90,7 @@ class Pet(QMainWindow):
 
         self.index = 1
         self.pic_url = os.path.join(BASE_DIR, self.file_path, str(self.file_list[self.index]))
-        self.pm = QPixmap(self.pic_url, "0", Qt.AvoidDither | Qt.ThresholdDither | Qt.ThresholdAlphaDither).scaled(
+        self.pm = QPixmap(self.pic_url).scaled(
             int(self.scale * self.wt), int(self.scale * self.wt))
         self.resize(self.pm.size())
         self.setMask(self.pm.mask())
@@ -266,16 +263,16 @@ class Pet(QMainWindow):
 
     def mousePressEvent(self, event):
         # 鼠标左键事件
-        if event.button() == Qt.LeftButton:
+        if event.button() == Qt.MouseButton.LeftButton:
             self.is_follow_mouse = True
-            self.mouse_drag_pos = event.globalPos() - self.pos()
+            self.mouse_drag_pos = event.globalPosition().toPoint() - self.pos()
             event.accept()
-            self.setCursor(QCursor(Qt.OpenHandCursor))
+            self.setCursor(QCursor(Qt.CursorShape.OpenHandCursor))
 
     def mouseMoveEvent(self, event):
         # 鼠标移动事件
-        if Qt.LeftButton and self.is_follow_mouse:
-            self.move(event.globalPos() - self.mouse_drag_pos)
+        if self.is_follow_mouse:
+            self.move(event.globalPosition().toPoint() - self.mouse_drag_pos)
             xy = self.pos()
             self.pos_x, self.pos_y = xy.x(), xy.y()
             event.accept()
@@ -283,17 +280,17 @@ class Pet(QMainWindow):
     def mouseReleaseEvent(self, event):
         # 鼠标松开事件
         self.is_follow_mouse = False
-        self.setCursor(QCursor(Qt.ArrowCursor))
+        self.setCursor(QCursor(Qt.CursorShape.ArrowCursor))
 
     def keyPressEvent(self, event):
         # command & Q   ==>quit
-        if event.key() == Qt.Key_Q and event.modifiers() == Qt.ControlModifier:
+        if event.key() == Qt.Key.Key_Q and event.modifiers() == Qt.KeyboardModifier.ControlModifier:
             self.quit()
         # command & +   ==>bigger
-        if event.modifiers() == Qt.ControlModifier and event.key() == Qt.Key_Equal:  # 两键组合
+        if event.modifiers() == Qt.KeyboardModifier.ControlModifier and event.key() == Qt.Key.Key_Equal:  # 两键组合
             self.scale += 0.01
         # command & -   ==>smaller
-        if event.modifiers() == Qt.ControlModifier and event.key() == Qt.Key_Minus:  # 两键组合
+        if event.modifiers() == Qt.KeyboardModifier.ControlModifier and event.key() == Qt.Key.Key_Minus:  # 两键组合
             self.scale -= 0.01
         config['frame_scale'][self.role_name][1] = self.scale
 
@@ -312,7 +309,7 @@ class Pet(QMainWindow):
         hide = menu.addAction("隐藏")
         quitAction = menu.addAction("退出")
         # 使用exec_()方法显示菜单。从鼠标右键事件对象中获得当前坐标。mapToGlobal()方法把当前组件的相对坐标转换为窗口（window）的绝对坐标。
-        action = menu.exec_(self.mapToGlobal(event.pos()))
+        action = menu.exec(self.mapToGlobal(event.pos()))
         if action == quitAction:
             # qApp.quit()
             # mixer.Sound(os.path.join(BASE_DIR, music_path, role_name,'晚安.mp3')).play()
@@ -331,7 +328,7 @@ class Pet(QMainWindow):
     def role_audio(self):
         if not self.audio_player:
             self.role_music.setText('人物语音～')
-            self.music_off.setText('关闭所有')
+        # 从鼠标右键事件对象中获得当前坐标，并转换为窗口的绝对坐标。
         else:
             self.role_music.setText('人物语音')
             # self.music_off.setText('关闭所有～')
@@ -438,4 +435,4 @@ if __name__ == '__main__':
     # 创建程序和对象
     app = QApplication(sys.argv)
     pet = Pet()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

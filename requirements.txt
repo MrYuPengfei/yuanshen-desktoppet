@@ -1,5 +1,5 @@
-Pillow
-pygame
-PyQt5
-PyQt5-tools
-python-for-android
+# Runtime dependencies are managed by uv in pyproject.toml.
+# Use `uv sync` to create/update the environment.
+PySide6>=6.8
+PyYAML>=6.0
+pygame-ce>=2.5

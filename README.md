@@ -22,15 +22,15 @@
 #### 安装教程
 A：Terminal/cmd（终端操作）
 1. git clone https://gitee.com/fg_slash/yuanshen-python3-desktoppet.git 克隆项目。
-2. cd yuanshen-python3-desktoppet 进入目录 pip install -r requirements.txt 安装依赖。
+2. cd yuanshen-python3-desktoppet 进入目录，使用 `uv sync` 安装依赖。
 3. 在config.yaml中配置自己对应的路径和设置
-4. (1)python desktoppet.py 运行py文件<br>
+4. (1) `uv run python desktoppet.py` 运行程序<br>
    (2)或直接在PyCharm等编辑器中直接右键运行。
    (3)在终端输入 nohup python -u desktoppet.py >pet.log 2>&1 & （直接后台运行程序！这样就不用一直开着编辑器了！）
 
 #### 使用说明
 
-1. 基于pyqt5开发的原神桌面宠物，目前支持可莉、芭芭拉、刻晴、万叶等近30个人物。
+1. 基于PySide6开发的原神桌面宠物，目前支持可莉、芭芭拉、刻晴、万叶等近30个人物。
 2. 目前png和gif图片已经全部转换完成，已经上传，项目下载安装好依赖就可以运行。（仅供开发研究玩乐，请勿当做商业用途！！！）
 3. 着实不太建议非社交牛逼症患者在白天以及人多的地方使用，社交牛逼症患者或二刺猿重度患者请自便。
 4. *****友情提示：语音默认开启。（上班请静音，小心社死！dddd！）*****
